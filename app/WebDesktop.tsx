@@ -1,4 +1,4 @@
-"use client";
+"use client"; /* Marks the file as a client component so React hooks, pointer events, and browser APIs can run here. */
 
 import {
   useCallback,
@@ -15,7 +15,7 @@ import type {
   ReactNode
 } from "react";
 
-type AppId =
+type AppId = /* Restricts window/app identifiers to known desktop apps. */
   | "welcome"
   | "terminal"
   | "writer"
@@ -24,7 +24,7 @@ type AppId =
   | "research"
   | "contact";
 
-type WindowModel = {
+type WindowModel = { /* Stores all state needed to render, move, resize, close and layer a window. */
   id: AppId;
   title: string;
   x: number;
@@ -59,7 +59,7 @@ type SnapPreview = {
   label: string;
 };
 
-type Interaction =
+type Interaction = /* Captures the initial pointer and window values needed during move or resize interactions. */
   | {
       type: "move";
       id: AppId;
@@ -100,11 +100,11 @@ type LayoutSnapshot = {
   nextZ: number;
 };
 
-const STORAGE_KEY = "webos-1-window-layout-v3";
+const STORAGE_KEY = "webos-1-window-layout-v3"; /* Names the localStorage entry used to persist the desktop window layout. */
 const TASKBAR_HEIGHT = 52;
 const SNAP_EDGE = 36;
 
-const appDefinitions: AppDefinition[] = [
+const appDefinitions: AppDefinition[] = [ /* Defines the desktop apps and their default window positions in one central place. */
   {
     id: "welcome",
     title: "Welcome",
@@ -240,7 +240,7 @@ const appDefinitions: AppDefinition[] = [
   }
 ];
 
-const appMap = new Map(appDefinitions.map((app) => [app.id, app]));
+const appMap = new Map(appDefinitions.map((app) => [app.id, app])); /* Builds a quick lookup table for app metadata during window, icon and taskbar rendering. */
 const defaultWindows = appDefinitions.map((app) => app.defaultWindow);
 
 const bootLines = [
@@ -278,7 +278,7 @@ const terminalIntro: TerminalLine[] = [
   { kind: "system", text: "Type 'help' for commands." }
 ];
 
-function clamp(value: number, min: number, max: number) {
+function clamp(value: number, min: number, max: number) { /* Keeps positions and sizes within safe bounds, even when the available space is very small. */
   return Math.min(Math.max(value, min), Math.max(min, max));
 }
 
@@ -296,7 +296,7 @@ function formatDate(date: Date) {
   });
 }
 
-function validateLayout(input: unknown): LayoutSnapshot | null {
+function validateLayout(input: unknown): LayoutSnapshot | null { /* Validates saved layout data before restoring it from localStorage. */
   if (!input || typeof input !== "object") {
     return null;
   }
@@ -306,7 +306,7 @@ function validateLayout(input: unknown): LayoutSnapshot | null {
     return null;
   }
 
-  const merged = defaultWindows.map((base) => {
+  const merged = defaultWindows.map((base) => { /* Merges saved window state with current defaults so older saved layouts do not break newer app definations. */
     const saved = candidate.windows?.find((item) => item.id === base.id);
 
     if (!saved) {
@@ -325,7 +325,7 @@ function validateLayout(input: unknown): LayoutSnapshot | null {
     };
   });
 
-  const highestZ = Math.max(...merged.map((item) => item.zIndex), 20);
+  const highestZ = Math.max(...merged.map((item) => item.zIndex), 20); /* Keeps the z-index ahead of every restored window. */
   return {
     windows: merged,
     nextZ:
@@ -335,7 +335,7 @@ function validateLayout(input: unknown): LayoutSnapshot | null {
   };
 }
 
-function getSnapPreview(
+function getSnapPreview( /* Calculates the snap target shown when a dragged window reaches a desktop edge or corner. */
   pointerX: number,
   pointerY: number,
   bounds: DOMRect,
@@ -405,7 +405,7 @@ function getSnapPreview(
   return null;
 }
 
-export function WebDesktop() {
+export function WebDesktop() { /* Main desktop shell managing window state, layout persistance, boot overlay, clock and taskbar. */
   const desktopRef = useRef<HTMLDivElement | null>(null);
   const [windows, setWindows] = useState<WindowModel[]>(defaultWindows);
   const [nextZ, setNextZ] = useState(30);
@@ -421,7 +421,7 @@ export function WebDesktop() {
   const [startOpen, setStartOpen] = useState(false);
   const [layoutReady, setLayoutReady] = useState(false);
 
-  const visibleWindows = useMemo(
+  const visibleWindows = useMemo( /* Filters only open and non-minimized windows for desktop rendering. */
     () => windows.filter((item) => item.isOpen && !item.isMinimized),
     [windows]
   );
@@ -431,7 +431,7 @@ export function WebDesktop() {
     [windows]
   );
 
-  const bringToFront = useCallback((id: AppId) => {
+  const bringToFront = useCallback((id: AppId) => { /* Raises a window above the others by assigning the next Z-index. */
     setWindows((current) =>
       current.map((item) => (item.id === id ? { ...item, zIndex: nextZ } : item))
     );
@@ -447,7 +447,7 @@ export function WebDesktop() {
     []
   );
 
-  const launchWindow = useCallback(
+  const launchWindow = useCallback( /* Opens or restores an app window and brings it to the front. */
     (id: AppId) => {
       setWindows((current) =>
         current.map((item) =>
@@ -467,14 +467,14 @@ export function WebDesktop() {
     [nextZ]
   );
 
-  const resetLayout = useCallback(() => {
+  const resetLayout = useCallback(() => { /* Clears the saved layout and restores all default window positions. */
     window.localStorage.removeItem(STORAGE_KEY);
     setWindows(defaultWindows);
     setNextZ(30);
     setSnapPreview(null);
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { /* Loads and validates the saved desktop layout once after the component mounts. */
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -491,7 +491,7 @@ export function WebDesktop() {
     }
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { /* Saves layout changes only after the initial restore attempt has completed. */
     if (!layoutReady) {
       return;
     }
@@ -517,7 +517,7 @@ export function WebDesktop() {
     return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { /* Tracks desktop container size so windows can stay within the visible area. */
     if (!desktopRef.current) {
       return;
     }
@@ -537,7 +537,7 @@ export function WebDesktop() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { /* Registers global pointer listeners while a move or resize interaction is active. */
     if (!interaction) {
       return;
     }
@@ -549,7 +549,7 @@ export function WebDesktop() {
       const availableHeight = Math.max(380, desktopSize.height);
       const bounds = desktopRef.current?.getBoundingClientRect();
 
-      if (active.type === "move" && bounds) {
+      if (active.type === "move" && bounds) { /* Updates the snap preview only while a window is being moved. */
         setSnapPreview(getSnapPreview(event.clientX, event.clientY, bounds, desktopSize));
       }
 
@@ -559,7 +559,7 @@ export function WebDesktop() {
             return item;
           }
 
-          if (active.type === "move") {
+          if (active.type === "move") { /* Converts pointer movement into a clamped window position during dragging. */
             const nextX = clamp(
               active.originX + event.clientX - active.startX,
               8,
@@ -574,7 +574,7 @@ export function WebDesktop() {
             return { ...item, x: nextX, y: nextY };
           }
 
-          const width = clamp(
+          const width = clamp( /* Converts pointer movement into clamped dimensions during resizing. */
             active.originWidth + event.clientX - active.startX,
             Math.min(item.minWidth, availableWidth - active.originX - 8),
             availableWidth - active.originX - 8
@@ -590,7 +590,7 @@ export function WebDesktop() {
       );
     }
 
-    function handlePointerUp() {
+    function handlePointerUp() { /* Applies the active snap target when the user releases a dragged window. */
       if (active.type === "move" && snapPreview) {
         updateWindow(active.id, {
           x: snapPreview.x,
@@ -615,7 +615,7 @@ export function WebDesktop() {
     };
   }, [desktopSize, interaction, snapPreview, updateWindow]);
 
-  function startMove(event: ReactPointerEvent, item: WindowModel) {
+  function startMove(event: ReactPointerEvent, item: WindowModel) { /* Starts a move interaction only for the primary mouse button. */
     if (event.button !== 0) {
       return;
     }
@@ -634,7 +634,7 @@ export function WebDesktop() {
     });
   }
 
-  function startResize(event: ReactPointerEvent, item: WindowModel) {
+  function startResize(event: ReactPointerEvent, item: WindowModel) { /* Starts a resize interaction and prevents the resize handle from also triggering window dragging. */
     if (event.button !== 0) {
       return;
     }
@@ -659,7 +659,7 @@ export function WebDesktop() {
       <section className="relative flex h-dvh flex-col overflow-hidden">
         <div className="desktop-wallpaper absolute inset-0" />
 
-        <div
+        <div /* Main desktop surface that closes the start menu when clicked. */
           className="relative min-h-0 flex-1 overflow-hidden"
           data-desktop
           onPointerDown={() => setStartOpen(false)}
@@ -684,7 +684,7 @@ export function WebDesktop() {
             </div>
           ) : null}
 
-          {visibleWindows.map((item) => (
+          {visibleWindows.map((item) => ( /* Renders every visible window with its own controls and app-specific content. */
             <DesktopWindow
               desktopSize={desktopSize}
               key={item.id}
@@ -723,7 +723,7 @@ export function WebDesktop() {
   );
 }
 
-function DesktopIcons({ launchWindow }: { launchWindow: (id: AppId) => void }) {
+function DesktopIcons({ launchWindow }: { launchWindow: (id: AppId) => void }) { /* Renders the desktop launcher icons from the shared app definition list. */
   return (
     <div className="absolute left-3 top-3 z-10 grid w-44 auto-rows-max grid-cols-2 gap-x-2 gap-y-2 sm:left-5 sm:top-5 sm:w-24 sm:grid-cols-1 sm:gap-4">
       {appDefinitions.map((app) => (
@@ -748,7 +748,7 @@ function DesktopIcons({ launchWindow }: { launchWindow: (id: AppId) => void }) {
   );
 }
 
-function AppIcon({ id, compact = false }: { id: AppId; compact?: boolean }) {
+function AppIcon({ id, compact = false }: { id: AppId; compact?: boolean }) { /* Chooses the correct SVG icon for each app ID. */
   const className = compact ? "size-4" : "size-7";
   const common = {
     "aria-hidden": true,
@@ -839,7 +839,7 @@ function AppIcon({ id, compact = false }: { id: AppId; compact?: boolean }) {
   );
 }
 
-function DesktopWindow({
+function DesktopWindow({ /* Window frame component responsible for bounds, title bar, controls, content area and resize handle. */
   children,
   desktopSize,
   onClose,
@@ -858,12 +858,12 @@ function DesktopWindow({
   onResizeStart: (event: ReactPointerEvent) => void;
   window: WindowModel;
 }) {
-  const app = appMap.get(window.id);
+  const app = appMap.get(window.id); /* Looks up app styling metadata for the current window. */
   const maxWidth = Math.max(280, desktopSize.width - 16);
   const maxHeight = Math.max(260, desktopSize.height - 16);
   const responsiveMinWidth = Math.min(window.minWidth, maxWidth);
   const responsiveMinHeight = Math.min(window.minHeight, maxHeight);
-  const width = clamp(Math.min(window.width, maxWidth), responsiveMinWidth, maxWidth);
+  const width = clamp(Math.min(window.width, maxWidth), responsiveMinWidth, maxWidth); /* Recomputes responsive window dimensions so oversized saved layouts fit the current screen. */
   const height = clamp(Math.min(window.height, maxHeight), responsiveMinHeight, maxHeight);
   const x = clamp(window.x, 8, desktopSize.width - width - 8);
   const y = clamp(window.y, 8, desktopSize.height - height - 8);
@@ -872,7 +872,7 @@ function DesktopWindow({
     <section
       className="absolute flex flex-col overflow-hidden rounded-lg border border-slate-300/90 bg-slate-100 shadow-[0_24px_80px_rgba(0,0,0,0.4)]"
       data-window={window.id}
-      onPointerDown={onFocus}
+      onPointerDown={onFocus} /* Focuses the window whenever the user interacts with it. */
       style={
         {
           "--accent": app?.accent ?? "from-sky-500 to-cyan-300",
@@ -938,7 +938,7 @@ function DesktopWindow({
   );
 }
 
-function Taskbar({
+function Taskbar({ /* Taskbar component showing start, pinned apps, open windows, and the live clock. */
   clock,
   dateLabel,
   launchWindow,
@@ -1008,7 +1008,7 @@ function Taskbar({
         })}
       </div>
 
-      <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
+      <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"> /* Allows many open windows to scroll horizontally instead of overflowing the taskbar. */
         {openWindows.map((item) => {
           const app = appMap.get(item.id);
 
@@ -1021,7 +1021,7 @@ function Taskbar({
               }`}
               data-taskbar-app={item.id}
               key={item.id}
-              onClick={() =>
+              onClick={() => /* Toggles taskbar items between minimized and restored states. */
                 item.isMinimized
                   ? launchWindow(item.id)
                   : updateWindow(item.id, { isMinimized: true })
@@ -1045,7 +1045,7 @@ function Taskbar({
   );
 }
 
-function StartMenu({
+function StartMenu({ /* Start menu listing every app plus a layout reset action. */
   launchWindow,
   resetLayout
 }: {
@@ -1056,7 +1056,7 @@ function StartMenu({
     <div
       className="absolute bottom-[56px] left-2 w-[calc(100vw-16px)] max-w-[380px] overflow-hidden rounded-lg border border-white/20 bg-slate-950/96 text-white shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl"
       data-start-menu
-      onPointerDown={(event) => event.stopPropagation()}
+      onPointerDown={(event) => event.stopPropagation()} /* Prevents clicks inside the start menu from closing it through the desktop click handler. */
     >
       <div className="flex items-center gap-3 bg-gradient-to-r from-sky-700 to-slate-900 p-4">
         <img
@@ -1100,7 +1100,7 @@ function StartMenu({
   );
 }
 
-function BootOverlay({ onDismiss }: { onDismiss: () => void }) {
+function BootOverlay({ onDismiss }: { onDismiss: () => void }) { /* Boot overlay simulating a firmware console before the desktop appears. */
   return (
     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black text-green-200">
       <div className="w-full max-w-3xl p-6 font-mono">
@@ -1126,14 +1126,14 @@ function BootOverlay({ onDismiss }: { onDismiss: () => void }) {
           ))}
         </div>
         <div className="mt-8 border border-green-300/30 bg-green-950/20 p-3 text-xs uppercase tracking-[0.16em] text-amber-200">
-          password prompt bypassed / no login gate / public desktop loading
+          loading desktop
         </div>
       </div>
     </div>
   );
 }
 
-function WindowContent({
+function WindowContent({ /* Routes each app id to its matching window content component. */
   id,
   launchWindow,
   resetLayout
@@ -1304,18 +1304,18 @@ function ContactApp() {
   );
 }
 
-function TerminalApp({ resetLayout }: { resetLayout: () => void }) {
+function TerminalApp({ resetLayout }: { resetLayout: () => void }) { /* Terminal app implementing a fake command session with history and built in commands. */
   const [lines, setLines] = useState<TerminalLine[]>(terminalIntro);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number | null>(null);
   const terminalEndRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  useEffect(() => { /* Automatically scrolls the terminal to the newest line after output changes. */
     terminalEndRef.current?.scrollIntoView({ block: "end" });
   }, [lines]);
 
-  function runCommand(command: string) {
+  function runCommand(command: string) { /* Parses and executes supported terminal command. */
     const normalized = command.trim().toLowerCase();
 
     if (!normalized) {
@@ -1366,7 +1366,7 @@ function TerminalApp({ resetLayout }: { resetLayout: () => void }) {
         { kind: "output", text: "Signal locked. The desktop is dancing in static export mode." },
         { kind: "output", text: "Mission requirement: custom feature confirmed." }
       );
-    } else if (normalized === "clear" || normalized === "cls") {
+    } else if (normalized === "clear" || normalized === "cls") { /* Clears terminal output immediately without appending another command result. */
       setLines([]);
       return;
     } else if (normalized === "reset-layout") {
@@ -1379,7 +1379,7 @@ function TerminalApp({ resetLayout }: { resetLayout: () => void }) {
     setLines((current) => [...current, ...output]);
   }
 
-  function handleSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent) { /* Submits a command, stores it in history and then runs it. */
     event.preventDefault();
     const command = input;
     setInput("");
@@ -1390,7 +1390,7 @@ function TerminalApp({ resetLayout }: { resetLayout: () => void }) {
     runCommand(command);
   }
 
-  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) { /* Handles ArrowUp and ArrowDown command history navigation. */
     if (event.key === "ArrowUp") {
       event.preventDefault();
       setHistoryIndex((current) => {
@@ -1458,13 +1458,13 @@ function TerminalApp({ resetLayout }: { resetLayout: () => void }) {
   );
 }
 
-function SystemMonitorApp() {
+function SystemMonitorApp() { /* System monitor app displaying fake telemetry for the desktop. */
   const startRef = useRef(Date.now());
   const [samples, setSamples] = useState([34, 48, 42, 55, 61, 46, 58, 52, 66, 49, 44, 57]);
   const [cpu, setCpu] = useState(42);
   const [ram, setRam] = useState(58);
   const [uptime, setUptime] = useState("00:00:00");
-
+  /* Updates fake CPU, RAM, chart samples and uptime on a timer. */
   useEffect(() => {
     const timer = window.setInterval(() => {
       setSamples((current) => {
@@ -1539,13 +1539,13 @@ function SystemMonitorApp() {
   );
 }
 
-function WriterApp() {
+function WriterApp() { /* WordPad style reader app for local markdown blog documents. */
   const [blogs, setBlogs] = useState<BlogEntry[]>([]);
   const [selected, setSelected] = useState<BlogEntry | null>(null);
   const [content, setContent] = useState("Loading local Markdown files...");
   const [query, setQuery] = useState("");
 
-  useEffect(() => {
+  useEffect(() => { /* Loads the blog manifest, sorts posts, and selects the newest document. */
     let cancelled = false;
 
     async function loadManifest() {
@@ -1570,12 +1570,12 @@ function WriterApp() {
       }
     });
 
-    return () => {
+    return () => { /* Prevents stale manifest requests from updating after unmount. */
       cancelled = true;
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { /* Loads the selected Markdown file and strips frontmatter before rendering it. */
     if (!selected) {
       return;
     }
@@ -1601,7 +1601,7 @@ function WriterApp() {
     };
   }, [selected]);
 
-  const filteredBlogs = useMemo(() => {
+  const filteredBlogs = useMemo(() => { /* Filters documents by title, description, source path, and tags. */
     const value = query.trim().toLowerCase();
     if (!value) {
       return blogs;
@@ -1691,13 +1691,13 @@ function WriterApp() {
   );
 }
 
-function MarkdownView({ text }: { text: string }) {
+function MarkdownView({ text }: { text: string }) { /* Lightweight Markdown renderer for headings, lists, code blocks and paragraphs. */
   const lines = text.split(/\r?\n/);
   const nodes: ReactNode[] = [];
   let codeLines: string[] = [];
   let inCode = false;
 
-  function flushCode(index: number) {
+  function flushCode(index: number) { /* Flushes accumulated fenced-code lines into a single preformatted block. */
     if (!codeLines.length) {
       return;
     }
@@ -1710,7 +1710,7 @@ function MarkdownView({ text }: { text: string }) {
     codeLines = [];
   }
 
-  lines.forEach((line, index) => {
+  lines.forEach((line, index) => { /* Walks each Markdown line and converts supported patterns into React nodes. */
     if (line.trim().startsWith("```")) {
       if (inCode) {
         flushCode(index);
@@ -1792,7 +1792,7 @@ function MarkdownView({ text }: { text: string }) {
     );
   });
 
-  flushCode(lines.length);
+  flushCode(lines.length); /* Flushes an unfinished code block at the end of the document. */
   return <>{nodes}</>;
 }
 
@@ -1825,7 +1825,7 @@ function CommandButton({
   );
 }
 
-function MonitorMeter({
+function MonitorMeter({ /* Reusable meter component for the system monitor percentage bars. */
   label,
   value,
   color
@@ -1847,6 +1847,6 @@ function MonitorMeter({
   );
 }
 
-function stripFrontmatter(text: string) {
+function stripFrontmatter(text: string) { /* Removes YAML frontmatter from Markdown before display. */
   return text.replace(/^---[\s\S]*?---\s*/, "");
 }

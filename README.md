@@ -2,6 +2,10 @@
 
 WebOS 1 is a browser-based desktop OS simulation with draggable windows, built with an embedded-systems and homelab-inspired portfolio aesthetic.
 
+## Live Demo
+
+https://os.devaanshpathak.com
+
 ## Screenshot
 
 > Screenshot placeholder: add a final desktop screenshot here before submission.
@@ -41,7 +45,11 @@ Then open the local development URL shown in the terminal.
 
 ## Deployment
 
-The final project will be exported as static files and deployed to a static host. The deployment should serve the desktop simulation directly without authentication so mission reviewers and visitors can test it immediately.
+The project is deployed publicly at:
+
+- Live site: https://os.devaanshpathak.com
+
+The project is exported as static files and deployed to a static host. The deployment serves the desktop simulation directly without authentication so mission reviewers and visitors can test it immediately.
 
 Build the static export with:
 
@@ -57,3 +65,5 @@ This project is for Hack Club's Stardance WebOS 1 mission:
 
 - Mission: https://stardance.hackclub.com/missions/web-os-1
 - Guide: https://jams.hackclub.com/batch/webOS
+
+Devlogs for the Stardance submission are posted in the Stardance portal.
