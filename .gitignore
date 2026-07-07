@@ -43,3 +43,8 @@ devlog/
 
 # Local planning
 roadmap.md
+
+# Local verification artifacts
+.next-dev*.log
+.playwright-mcp/
+webos-phase*.png

@@ -1,0 +1,326 @@
+﻿[
+    {
+        "title":  "How LLMs Actually Work",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/0/How LLMs Actually Work 3820088cb4ea80ed846bf1d662597d8a.md",
+        "sourcePath":  "blogs/0/How LLMs Actually Work 3820088cb4ea80ed846bf1d662597d8a.md"
+    },
+    {
+        "title":  "How LLMs Actually Work?",
+        "description":  "Transformers explained without the heavy math",
+        "date":  "2026-05-10",
+        "tags":  [
+                     "LLMs",
+                     "Transformers",
+                     "Machine Learning",
+                     " Neural Networks"
+                 ],
+        "path":  "/portfolio/blogs/0/how-llms-work.md",
+        "sourcePath":  "blogs/0/how-llms-work.md"
+    },
+    {
+        "title":  "Starting SRE-Zero: Building RL Environments for Reliable Tool-Using AI Agents",
+        "description":  "Why I’m starting a long-term research project on environment-grounded evaluation and training for reliable LLM agents.",
+        "date":  "2026-05-13",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Reinforcement Learning",
+                     "AI Systems"
+                 ],
+        "path":  "/portfolio/blogs/1/starting-sre-zero.md",
+        "sourcePath":  "blogs/1/starting-sre-zero.md"
+    },
+    {
+        "title":  "Blog 10: TokenScope v0.2 and SRE-Zero",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/10/README.md",
+        "sourcePath":  "blogs/10/README.md"
+    },
+    {
+        "title":  "TokenScope v0.2: Tokenizer Inspection as Evaluation Infrastructure",
+        "description":  "Why TokenScope matters for SRE-Zero, what shipped in v0.1.0 and v0.2.0, and how tokenizer inspection becomes part of reliable agent evaluation.",
+        "date":  "2026-07-03",
+        "tags":  [
+                     "TokenScope",
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "Tooling"
+                 ],
+        "path":  "/portfolio/blogs/10/tokenscope-tokenizer-inspection-for-sre-zero.md",
+        "sourcePath":  "blogs/10/tokenscope-tokenizer-inspection-for-sre-zero.md"
+    },
+    {
+        "title":  "First SRE-Zero Baseline Results: Evidence Is Easier Than Resolution",
+        "description":  "A first small benchmark sweep across random, scripted, prompting, ReAct, open-source, and frontier baselines in SRE-Zero.",
+        "date":  "2026-05-14",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "AI Systems"
+                 ],
+        "path":  "/portfolio/blogs/2/first-sre-zero-baseline-results.md",
+        "sourcePath":  "blogs/2/first-sre-zero-baseline-results.md"
+    },
+    {
+        "title":  "results_table",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/2/results_table.md",
+        "sourcePath":  "blogs/2/results_table.md"
+    },
+    {
+        "title":  "results_table",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/3/plots/blog_cheap_sweep/results_table.md",
+        "sourcePath":  "blogs/3/plots/blog_cheap_sweep/results_table.md"
+    },
+    {
+        "title":  "metrics_table",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/3/plots/expanded_deterministic_smoke/metrics_table.md",
+        "sourcePath":  "blogs/3/plots/expanded_deterministic_smoke/metrics_table.md"
+    },
+    {
+        "title":  "metrics_table",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/3/plots/final_push_smoke/metrics_table.md",
+        "sourcePath":  "blogs/3/plots/final_push_smoke/metrics_table.md"
+    },
+    {
+        "title":  "metrics_table",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/3/plots/plot_from_eval_smoke/metrics_table.md",
+        "sourcePath":  "blogs/3/plots/plot_from_eval_smoke/metrics_table.md"
+    },
+    {
+        "title":  "metrics_table",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/3/plots/plot_script_smoke/metrics_table.md",
+        "sourcePath":  "blogs/3/plots/plot_script_smoke/metrics_table.md"
+    },
+    {
+        "title":  "Plots",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/3/plots/README.md",
+        "sourcePath":  "blogs/3/plots/README.md"
+    },
+    {
+        "title":  "SRE-Zero v1 Bundle",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/3/README.md",
+        "sourcePath":  "blogs/3/README.md"
+    },
+    {
+        "title":  "SRE-Zero: Environment-Grounded Evaluation for Reliable Tool-Using Agents",
+        "description":  "Publishing the first public SRE-Zero technical report draft and preliminary benchmark results.",
+        "date":  "2026-05-19",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "AI Systems"
+                 ],
+        "path":  "/portfolio/blogs/3/sre-zero-environment-grounded-evaluation-v1.md",
+        "sourcePath":  "blogs/3/sre-zero-environment-grounded-evaluation-v1.md"
+    },
+    {
+        "title":  "metrics_table",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/4/plots/baseline_blog_full/metrics_table.md",
+        "sourcePath":  "blogs/4/plots/baseline_blog_full/metrics_table.md"
+    },
+    {
+        "title":  "SRE-Zero v1.5 Bundle",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/4/README.md",
+        "sourcePath":  "blogs/4/README.md"
+    },
+    {
+        "title":  "SRE-Zero v1.5: Public Draft and 25-Task Baseline Sweep",
+        "description":  "Making the SRE-Zero v1.5 technical report draft public, with paper PDF, plots, JSON records, and preliminary baseline results.",
+        "date":  "2026-05-23",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "AI Systems"
+                 ],
+        "path":  "/portfolio/blogs/4/sre-zero-v1-5-public-draft.md",
+        "sourcePath":  "blogs/4/sre-zero-v1-5-public-draft.md"
+    },
+    {
+        "title":  "Benchmarking Agents Is Also a Systems Problem",
+        "description":  "Why I paused SRE-Zero\u0027s 40-task open-weight sweep and added retries, cooldowns, checkpoints, pause, and resume before publishing larger model results.",
+        "date":  "2026-06-06",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "AI Systems"
+                 ],
+        "path":  "/portfolio/blogs/5/benchmarking-agents-is-also-a-systems-problem.md",
+        "sourcePath":  "blogs/5/benchmarking-agents-is-also-a-systems-problem.md"
+    },
+    {
+        "title":  "Pause and Resume Commands",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/5/pause_resume_commands.md",
+        "sourcePath":  "blogs/5/pause_resume_commands.md"
+    },
+    {
+        "title":  "Blog 5 Bundle: Benchmarking Agents Is Also a Systems Problem",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/5/README.md",
+        "sourcePath":  "blogs/5/README.md"
+    },
+    {
+        "title":  "Managing Long SRE-Zero Baseline Runs with a Terminal UI",
+        "description":  "Why SRE-Zero now has a local terminal UI for creating, pausing, resuming, monitoring, and organizing long model-evaluation sweeps.",
+        "date":  "2026-06-12",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "AI Systems"
+                 ],
+        "path":  "/portfolio/blogs/6/managed-baseline-runs-with-the-sre-zero-tui.md",
+        "sourcePath":  "blogs/6/managed-baseline-runs-with-the-sre-zero-tui.md"
+    },
+    {
+        "title":  "Blog 6 Bundle: Managed Baseline Runs with the SRE-Zero TUI",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/6/README.md",
+        "sourcePath":  "blogs/6/README.md"
+    },
+    {
+        "title":  "Qwen on SRE-Zero Easy: Agent Control Matters",
+        "description":  "A managed-run report comparing plain prompting, ReAct, and guided open-source-agent control for Qwen on the SRE-Zero easy split.",
+        "date":  "2026-06-14",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "Benchmarking"
+                 ],
+        "path":  "/portfolio/blogs/7/qwen-easy-agent-styles.md",
+        "sourcePath":  "blogs/7/qwen-easy-agent-styles.md"
+    },
+    {
+        "title":  "Blog 7: Qwen Easy Agent Styles",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/7/README.md",
+        "sourcePath":  "blogs/7/README.md"
+    },
+    {
+        "title":  "Mistral Small on SRE-Zero Easy: Evidence Without Enough Closure",
+        "description":  "A managed-run report comparing plain prompting, ReAct, and guided open-source-agent control for Mistral Small on the SRE-Zero easy split.",
+        "date":  "2026-06-15",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "Benchmarking"
+                 ],
+        "path":  "/portfolio/blogs/8/mistral-small-easy-agent-styles.md",
+        "sourcePath":  "blogs/8/mistral-small-easy-agent-styles.md"
+    },
+    {
+        "title":  "Blog 8: Mistral Small Easy Agent Styles",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/8/README.md",
+        "sourcePath":  "blogs/8/README.md"
+    },
+    {
+        "title":  "GPT-OSS 20B on SRE-Zero Easy: ReAct Helps, Resolution Still Fails Often",
+        "description":  "A managed-run report comparing plain prompting, ReAct, and guided open-source-agent control for GPT-OSS 20B on the SRE-Zero easy split.",
+        "date":  "2026-06-16",
+        "tags":  [
+                     "SRE-Zero",
+                     "LLM Agents",
+                     "Evaluation",
+                     "Benchmarking"
+                 ],
+        "path":  "/portfolio/blogs/9/gpt-oss-20b-easy-agent-styles.md",
+        "sourcePath":  "blogs/9/gpt-oss-20b-easy-agent-styles.md"
+    },
+    {
+        "title":  "Blog 9: GPT-OSS 20B Easy Agent Styles",
+        "description":  "",
+        "date":  "",
+        "tags":  [
+
+                 ],
+        "path":  "/portfolio/blogs/9/README.md",
+        "sourcePath":  "blogs/9/README.md"
+    }
+]
