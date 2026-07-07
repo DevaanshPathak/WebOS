@@ -6,11 +6,7 @@ WebOS 1 is a browser-based desktop OS simulation with draggable windows, built w
 
 https://os.devaanshpathak.com
 
-## Screenshot
-
-> Screenshot placeholder: add a final desktop screenshot here before submission.
-
-## Planned Features
+## Features
 
 - Desktop-style webpage with multiple draggable windows.
 - Custom visual identity distinct from the official WebOS guide.
