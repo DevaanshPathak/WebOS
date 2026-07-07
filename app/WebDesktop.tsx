@@ -1008,7 +1008,7 @@ function Taskbar({ /* Taskbar component showing start, pinned apps, open windows
         })}
       </div>
 
-      <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"> /* Allows many open windows to scroll horizontally instead of overflowing the taskbar. */
+      <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
         {openWindows.map((item) => {
           const app = appMap.get(item.id);
 
