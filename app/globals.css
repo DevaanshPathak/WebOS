@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  background: #070a0f;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: #070a0f;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.scanline {
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(0, 0, 0, 0) 50%
+  );
+  background-size: 100% 4px;
+}
