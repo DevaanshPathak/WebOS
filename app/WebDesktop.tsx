@@ -42,7 +42,6 @@ type AppDefinition = {
   id: AppId;
   title: string;
   shortTitle: string;
-  icon: string;
   accent: string;
   defaultWindow: WindowModel;
 };
@@ -110,7 +109,6 @@ const appDefinitions: AppDefinition[] = [
     id: "welcome",
     title: "Welcome",
     shortTitle: "Welcome",
-    icon: "W1",
     accent: "from-sky-500 to-cyan-300",
     defaultWindow: {
       id: "welcome",
@@ -130,7 +128,6 @@ const appDefinitions: AppDefinition[] = [
     id: "terminal",
     title: "Terminal",
     shortTitle: "Terminal",
-    icon: "C:\\",
     accent: "from-emerald-500 to-lime-300",
     defaultWindow: {
       id: "terminal",
@@ -150,7 +147,6 @@ const appDefinitions: AppDefinition[] = [
     id: "writer",
     title: "WordPad",
     shortTitle: "WordPad",
-    icon: "DOC",
     accent: "from-blue-600 to-indigo-300",
     defaultWindow: {
       id: "writer",
@@ -170,7 +166,6 @@ const appDefinitions: AppDefinition[] = [
     id: "monitor",
     title: "System Monitor",
     shortTitle: "Monitor",
-    icon: "CPU",
     accent: "from-teal-500 to-green-300",
     defaultWindow: {
       id: "monitor",
@@ -190,7 +185,6 @@ const appDefinitions: AppDefinition[] = [
     id: "profile",
     title: "Profile",
     shortTitle: "Profile",
-    icon: "DP",
     accent: "from-amber-500 to-orange-300",
     defaultWindow: {
       id: "profile",
@@ -210,7 +204,6 @@ const appDefinitions: AppDefinition[] = [
     id: "research",
     title: "Research",
     shortTitle: "Research",
-    icon: "SRE",
     accent: "from-violet-500 to-fuchsia-300",
     defaultWindow: {
       id: "research",
@@ -230,7 +223,6 @@ const appDefinitions: AppDefinition[] = [
     id: "contact",
     title: "Uplink",
     shortTitle: "Uplink",
-    icon: "NET",
     accent: "from-slate-500 to-slate-200",
     defaultWindow: {
       id: "contact",
@@ -584,12 +576,12 @@ export function WebDesktop() {
 
           const width = clamp(
             active.originWidth + event.clientX - active.startX,
-            item.minWidth,
+            Math.min(item.minWidth, availableWidth - active.originX - 8),
             availableWidth - active.originX - 8
           );
           const height = clamp(
             active.originHeight + event.clientY - active.startY,
-            item.minHeight,
+            Math.min(item.minHeight, availableHeight - active.originY - 8),
             availableHeight - active.originY - 8
           );
 
@@ -664,7 +656,7 @@ export function WebDesktop() {
 
   return (
     <main className="h-screen overflow-hidden bg-slate-950 text-slate-950">
-      <section className="relative flex h-screen flex-col overflow-hidden">
+      <section className="relative flex h-dvh flex-col overflow-hidden">
         <div className="desktop-wallpaper absolute inset-0" />
 
         <div
@@ -733,19 +725,19 @@ export function WebDesktop() {
 
 function DesktopIcons({ launchWindow }: { launchWindow: (id: AppId) => void }) {
   return (
-    <div className="absolute left-5 top-5 z-10 grid w-24 auto-rows-max gap-4">
+    <div className="absolute left-3 top-3 z-10 grid w-44 auto-rows-max grid-cols-2 gap-x-2 gap-y-2 sm:left-5 sm:top-5 sm:w-24 sm:grid-cols-1 sm:gap-4">
       {appDefinitions.map((app) => (
         <button
-          className="group flex min-h-20 flex-col items-center justify-start gap-1 rounded px-2 py-1 text-center text-white outline-none drop-shadow-[0_2px_2px_rgba(0,0,0,0.55)] transition hover:bg-white/15 focus:bg-white/20"
+          className="group flex min-h-[4.5rem] flex-col items-center justify-start gap-1 rounded px-2 py-1 text-center text-white outline-none drop-shadow-[0_2px_2px_rgba(0,0,0,0.55)] transition hover:bg-white/15 focus:bg-white/20 sm:min-h-[5.25rem]"
           data-launcher={app.id}
           key={app.id}
           onClick={() => launchWindow(app.id)}
           type="button"
         >
           <span
-            className={`grid size-11 place-items-center rounded-md border border-white/50 bg-gradient-to-br ${app.accent} text-[10px] font-black text-white shadow-lg shadow-black/30`}
+            className={`grid size-11 place-items-center rounded-lg border border-white/55 bg-gradient-to-br ${app.accent} text-white shadow-lg shadow-black/30`}
           >
-            {app.icon}
+            <AppIcon id={app.id} />
           </span>
           <span className="max-w-20 text-[12px] font-semibold leading-tight">
             {app.shortTitle}
@@ -753,6 +745,97 @@ function DesktopIcons({ launchWindow }: { launchWindow: (id: AppId) => void }) {
         </button>
       ))}
     </div>
+  );
+}
+
+function AppIcon({ id, compact = false }: { id: AppId; compact?: boolean }) {
+  const className = compact ? "size-4" : "size-7";
+  const common = {
+    "aria-hidden": true,
+    className,
+    fill: "none",
+    stroke: "currentColor",
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    strokeWidth: compact ? 2.2 : 1.8,
+    viewBox: "0 0 24 24"
+  };
+
+  if (id === "welcome") {
+    return (
+      <svg {...common}>
+        <rect height="13" rx="2" width="18" x="3" y="5" />
+        <path d="M3 9h18" />
+        <path d="M8 14h4" />
+        <path d="M16.5 12.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7.7-1.6z" />
+      </svg>
+    );
+  }
+
+  if (id === "terminal") {
+    return (
+      <svg {...common}>
+        <rect height="16" rx="2" width="18" x="3" y="4" />
+        <path d="M7 9l3 3-3 3" />
+        <path d="M12 15h5" />
+      </svg>
+    );
+  }
+
+  if (id === "writer") {
+    return (
+      <svg {...common}>
+        <path d="M7 3h7l4 4v14H7z" />
+        <path d="M14 3v5h5" />
+        <path d="M10 12h6" />
+        <path d="M10 15h6" />
+        <path d="M10 18h4" />
+      </svg>
+    );
+  }
+
+  if (id === "monitor") {
+    return (
+      <svg {...common}>
+        <rect height="13" rx="2" width="16" x="4" y="4" />
+        <path d="M8 14v-3" />
+        <path d="M12 14V8" />
+        <path d="M16 14v-5" />
+        <path d="M9 20h6" />
+        <path d="M12 17v3" />
+      </svg>
+    );
+  }
+
+  if (id === "profile") {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="8" r="3.5" />
+        <path d="M5 20c1.2-4 3.5-6 7-6s5.8 2 7 6" />
+      </svg>
+    );
+  }
+
+  if (id === "research") {
+    return (
+      <svg {...common}>
+        <circle cx="7" cy="8" r="2.5" />
+        <circle cx="17" cy="7" r="2.5" />
+        <circle cx="15" cy="17" r="2.5" />
+        <path d="M9.2 8h5.6" />
+        <path d="M8.7 10.1l4.6 5" />
+        <path d="M16.4 9.4l-1 5.1" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...common}>
+      <path d="M4 8l8 6 8-6" />
+      <rect height="12" rx="2" width="18" x="3" y="6" />
+      <path d="M18 4l2-2" />
+      <path d="M20 2v5h-5" />
+    </svg>
   );
 }
 
@@ -776,14 +859,18 @@ function DesktopWindow({
   window: WindowModel;
 }) {
   const app = appMap.get(window.id);
-  const width = Math.min(window.width, Math.max(window.minWidth, desktopSize.width - 16));
-  const height = Math.min(window.height, Math.max(window.minHeight, desktopSize.height - 16));
+  const maxWidth = Math.max(280, desktopSize.width - 16);
+  const maxHeight = Math.max(260, desktopSize.height - 16);
+  const responsiveMinWidth = Math.min(window.minWidth, maxWidth);
+  const responsiveMinHeight = Math.min(window.minHeight, maxHeight);
+  const width = clamp(Math.min(window.width, maxWidth), responsiveMinWidth, maxWidth);
+  const height = clamp(Math.min(window.height, maxHeight), responsiveMinHeight, maxHeight);
   const x = clamp(window.x, 8, desktopSize.width - width - 8);
   const y = clamp(window.y, 8, desktopSize.height - height - 8);
 
   return (
     <section
-      className="absolute flex flex-col overflow-hidden rounded-md border border-slate-400/80 bg-slate-100 shadow-[0_24px_80px_rgba(0,0,0,0.4)]"
+      className="absolute flex flex-col overflow-hidden rounded-lg border border-slate-300/90 bg-slate-100 shadow-[0_24px_80px_rgba(0,0,0,0.4)]"
       data-window={window.id}
       onPointerDown={onFocus}
       style={
@@ -797,15 +884,15 @@ function DesktopWindow({
       }
     >
       <div
-        className="flex h-9 cursor-grab touch-none select-none items-center justify-between bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 pl-2 text-white active:cursor-grabbing"
+        className="flex h-10 cursor-grab touch-none select-none items-center justify-between bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 pl-2 text-white active:cursor-grabbing"
         data-window-title={window.id}
         onPointerDown={onMoveStart}
       >
         <div className="flex min-w-0 items-center gap-2">
           <span
-            className={`grid size-5 place-items-center rounded-sm bg-gradient-to-br ${app?.accent ?? "from-sky-500 to-cyan-300"} text-[8px] font-black`}
+            className={`grid size-6 place-items-center rounded bg-gradient-to-br ${app?.accent ?? "from-sky-500 to-cyan-300"}`}
           >
-            {app?.icon ?? "APP"}
+            <AppIcon id={window.id} compact />
           </span>
           <span className="truncate text-[13px] font-semibold">{window.title}</span>
         </div>
@@ -872,7 +959,7 @@ function Taskbar({
 }) {
   return (
     <footer
-      className="relative z-40 flex h-[52px] shrink-0 items-center gap-2 border-t border-white/20 bg-slate-950/82 px-2 text-white shadow-[0_-12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl"
+      className="relative z-40 flex h-[52px] shrink-0 items-center gap-2 border-t border-white/20 bg-slate-950/86 px-2 text-white shadow-[0_-12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl"
       style={{ height: TASKBAR_HEIGHT }}
     >
       {startOpen ? (
@@ -883,7 +970,7 @@ function Taskbar({
       ) : null}
 
       <button
-        className="flex h-10 items-center gap-2 rounded-md bg-sky-500 px-4 text-sm font-bold text-white shadow hover:bg-sky-400"
+        className="flex h-10 shrink-0 items-center gap-2 rounded-md bg-sky-500 px-3 text-sm font-bold text-white shadow hover:bg-sky-400 sm:px-4"
         data-start-button
         onClick={(event) => {
           event.stopPropagation();
@@ -891,13 +978,13 @@ function Taskbar({
         }}
         type="button"
       >
-        <span className="grid size-5 place-items-center rounded bg-white text-xs font-black text-sky-600">
-          W
+        <span className="grid size-5 place-items-center rounded bg-white text-sky-600">
+          <AppIcon id="welcome" compact />
         </span>
-        Start
+        <span className="hidden sm:inline">Start</span>
       </button>
 
-      <div className="flex h-10 items-center gap-1 border-l border-white/15 pl-2">
+      <div className="hidden h-10 items-center gap-1 border-l border-white/15 pl-2 sm:flex">
         {["terminal", "writer", "monitor"].map((id) => {
           const app = appMap.get(id as AppId);
           if (!app) {
@@ -913,10 +1000,8 @@ function Taskbar({
               title={app.title}
               type="button"
             >
-              <span
-                className={`grid size-7 place-items-center rounded bg-gradient-to-br ${app.accent} text-[8px] text-white`}
-              >
-                {app.icon}
+              <span className={`grid size-7 place-items-center rounded bg-gradient-to-br ${app.accent} text-white`}>
+                <AppIcon id={id as AppId} compact />
               </span>
             </button>
           );
@@ -929,7 +1014,7 @@ function Taskbar({
 
           return (
             <button
-              className={`flex h-10 min-w-36 max-w-52 items-center gap-2 rounded-md border px-3 text-left text-xs transition ${
+            className={`flex h-10 min-w-24 max-w-44 items-center gap-2 rounded-md border px-2 text-left text-xs transition sm:min-w-36 sm:max-w-52 sm:px-3 ${
                 item.isMinimized
                   ? "border-white/10 bg-white/5 text-slate-300"
                   : "border-sky-300/50 bg-sky-500/22 text-white"
@@ -943,10 +1028,8 @@ function Taskbar({
               }
               type="button"
             >
-              <span
-                className={`grid size-6 shrink-0 place-items-center rounded bg-gradient-to-br ${app?.accent ?? "from-slate-500 to-slate-300"} text-[8px] font-black`}
-              >
-                {app?.icon ?? "APP"}
+              <span className={`grid size-6 shrink-0 place-items-center rounded bg-gradient-to-br ${app?.accent ?? "from-slate-500 to-slate-300"}`}>
+                <AppIcon id={item.id} compact />
               </span>
               <span className="truncate">{item.title}</span>
             </button>
@@ -954,7 +1037,7 @@ function Taskbar({
         })}
       </div>
 
-      <div className="min-w-24 rounded px-2 py-1 text-right text-[11px] leading-4 hover:bg-white/10">
+      <div className="min-w-16 rounded px-2 py-1 text-right text-[10px] leading-4 hover:bg-white/10 sm:min-w-24 sm:text-[11px]">
         <div>{clock}</div>
         <div className="text-slate-300">{dateLabel}</div>
       </div>
@@ -971,7 +1054,7 @@ function StartMenu({
 }) {
   return (
     <div
-      className="absolute bottom-[56px] left-2 w-[360px] overflow-hidden rounded-lg border border-white/20 bg-slate-950/96 text-white shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl"
+      className="absolute bottom-[56px] left-2 w-[calc(100vw-16px)] max-w-[380px] overflow-hidden rounded-lg border border-white/20 bg-slate-950/96 text-white shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl"
       data-start-menu
       onPointerDown={(event) => event.stopPropagation()}
     >
@@ -996,10 +1079,8 @@ function StartMenu({
             onClick={() => launchWindow(app.id)}
             type="button"
           >
-            <span
-              className={`grid size-8 place-items-center rounded bg-gradient-to-br ${app.accent} text-[9px] font-black`}
-            >
-              {app.icon}
+            <span className={`grid size-8 place-items-center rounded bg-gradient-to-br ${app.accent}`}>
+              <AppIcon id={app.id} compact />
             </span>
             <span>{app.title}</span>
           </button>
@@ -1091,11 +1172,11 @@ function WindowContent({
 function WelcomeApp({ launchWindow }: { launchWindow: (id: AppId) => void }) {
   return (
     <div className="flex min-h-full flex-col bg-white">
-      <div className="bg-gradient-to-r from-sky-600 via-cyan-600 to-slate-800 p-6 text-white">
+      <div className="bg-gradient-to-r from-sky-600 via-cyan-600 to-slate-800 p-5 text-white sm:p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-100">
           Stardance WebOS 1 mission
         </p>
-        <h1 className="mt-3 text-4xl font-bold">WebOS 1 Desktop</h1>
+        <h1 className="mt-3 text-3xl font-bold sm:text-4xl">WebOS 1 Desktop</h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-sky-50">
           A Windows-style browser desktop for Devaansh Pathak, with real window
           movement, snapping, persistence, terminal commands, monitor telemetry,
@@ -1103,7 +1184,7 @@ function WelcomeApp({ launchWindow }: { launchWindow: (id: AppId) => void }) {
         </p>
       </div>
 
-      <div className="grid flex-1 gap-4 p-5 md:grid-cols-3">
+      <div className="grid flex-1 gap-4 p-4 sm:p-5 md:grid-cols-3">
         <InfoTile label="No password gate" value="Public session" />
         <InfoTile label="Layout storage" value="localStorage" />
         <InfoTile label="Static hosting" value="Next export" />
@@ -1341,7 +1422,7 @@ function TerminalApp({ resetLayout }: { resetLayout: () => void }) {
       <div className="border-b border-green-900/80 bg-black px-3 py-2 text-xs text-green-400">
         WebOS Terminal - hardcoded command session
       </div>
-      <div className="min-h-0 flex-1 overflow-auto p-3">
+      <div className="min-h-0 flex-1 overflow-auto p-3 text-xs sm:text-sm">
         {lines.map((line, index) => (
           <div
             className={
@@ -1361,7 +1442,8 @@ function TerminalApp({ resetLayout }: { resetLayout: () => void }) {
         <div ref={terminalEndRef} />
       </div>
       <form className="flex border-t border-green-900/80 bg-black p-2" onSubmit={handleSubmit}>
-        <span className="mr-2 text-cyan-200">C:\Users\Devaansh&gt;</span>
+        <span className="mr-2 hidden shrink-0 text-cyan-200 sm:inline">C:\Users\Devaansh&gt;</span>
+        <span className="mr-2 shrink-0 text-cyan-200 sm:hidden">&gt;</span>
         <input
           aria-label="Terminal command"
           className="min-w-0 flex-1 bg-transparent text-green-100 outline-none"
@@ -1564,8 +1646,8 @@ function WriterApp() {
         </div>
       </div>
 
-      <div className="grid min-h-0 flex-1 grid-cols-[240px_1fr]">
-        <aside className="min-h-0 overflow-auto border-r border-slate-300 bg-slate-100 p-3">
+      <div className="grid min-h-0 flex-1 grid-rows-[210px_1fr] sm:grid-cols-[240px_1fr] sm:grid-rows-none">
+        <aside className="min-h-0 overflow-auto border-b border-slate-300 bg-slate-100 p-3 sm:border-b-0 sm:border-r">
           <input
             aria-label="Search documents"
             className="mb-3 w-full rounded border border-slate-300 px-2 py-1.5 text-sm outline-none focus:border-blue-500"
@@ -1595,8 +1677,8 @@ function WriterApp() {
           </div>
         </aside>
 
-        <div className="min-h-0 overflow-auto bg-slate-300 p-6">
-          <article className="mx-auto min-h-full max-w-3xl bg-white px-12 py-10 text-slate-950 shadow-xl">
+        <div className="min-h-0 overflow-auto bg-slate-300 p-3 sm:p-6">
+          <article className="mx-auto min-h-full max-w-3xl bg-white px-5 py-6 text-slate-950 shadow-xl sm:px-12 sm:py-10">
             <div className="mb-6 border-b border-slate-200 pb-4 text-xs text-slate-500">
               <p>{selected?.sourcePath ?? "No document selected"}</p>
               {selected?.description ? <p className="mt-1">{selected.description}</p> : null}
